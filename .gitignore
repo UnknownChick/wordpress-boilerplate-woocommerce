@@ -1,0 +1,31 @@
+# Application
+web/app/plugins/*
+!web/app/plugins/.gitkeep
+!web/app/plugins/custom-dashboard/
+web/app/mu-plugins/bedrock-disallow-indexing/
+web/app/mu-plugins/headache/
+web/app/themes/twentytwentyfour/
+web/app/upgrade
+web/app/cache/*
+
+# WordPress
+web/wp
+
+# Logs
+*.log
+
+# Dotenv
+.env
+.env.*
+!.env.example
+
+# Composer
+/vendor
+web/app/vendor
+
+# WP-CLI
+wp-cli.local.yml
+
+# IDE
+/.idea
+/.vscode
