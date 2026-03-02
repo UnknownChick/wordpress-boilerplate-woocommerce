@@ -1,0 +1,43 @@
+<article class="product">
+    {% if showthumb %}
+        <div class="media-figure {% if not product.thumbnail %}placeholder{% endif %}">
+            <a href="{{ product.link }}">
+                {% if product.thumbnail %}
+                    <img src="{{ product.thumbnail.src|resize(product_thumb_size[0], product_thumb_size[1]) }}" />
+                {% else %}
+                    <span class="thumb-placeholder"><i class="icon-camera"></i></span>
+                {% endif %}
+            </a>
+        </div>
+    {% endif %}
+    <a class="product__content" href="{{ fn('wp_make_link_relative', product.link) }}" title="{{ product.title }}">
+{#        {% do action('woocommerce_before_shop_loop_item_title') %}#}
+        {% if product.thumbnail %}
+            <figure class="product__image">
+                <img src="{{ fn('wp_make_link_relative', product.thumbnail.src) }}" alt="Image de produit {{ product.title }}">
+            </figure>
+        {% endif %}
+
+        <span class="product__price">
+            {% do action('woocommerce_after_shop_loop_item_title') %}
+        </span>
+
+        {% if product.title %}
+            <h3 class="product__title">{{ product.title }}</h3>
+        {% else %}
+            <h3 class="product__title">{{ fn('the_title') }}</h3>
+        {% endif %}
+
+        <span class="product__description">
+            {{ fn('the_excerpt') }}
+        </span>
+
+        {% set manufacturer_terms = fn('get_the_terms', product.ID, 'fabricant') %}
+        {% if manufacturer_terms %}
+            <span class="product__manufacturer">
+                {{ manufacturer_terms[0].name }}
+            </span>
+        {% endif %}
+    </a>
+    <a href="{{ fn('wp_make_link_relative', product.link) }}" class="add_to_cart_button">Voir le produit</a>
+</article>

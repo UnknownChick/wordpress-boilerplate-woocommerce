@@ -1,0 +1,25 @@
+{% extends "base.twig" %}
+
+{% set main_class = 'cart' %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="row row--lg">
+            <div class="col">
+                {% apply shortcodes %}
+                    [woocommerce_cart]
+                {% endapply %}
+            </div>
+        </div>
+    </section>
+
+    <section class="pb-5">
+        <div class="row row--lg">
+            <div class="col">
+                <h2 class="mb-2">Voir aussi</h2>
+
+                {{ products }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

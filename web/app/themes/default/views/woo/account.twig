@@ -1,0 +1,15 @@
+{% extends "base.twig" %}
+
+{% set main_class = 'account' %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="row row--lg">
+            <div class="col">
+                {% apply shortcodes %}
+                    [woocommerce_my_account]
+                {% endapply %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="row row--lg">
+            <div class="col">
+                {% do action('woocommerce_before_shop_loop') %}
+
+                {% if cat_title %}
+                    <div class="prose mb-3">
+                        <h1 class="cat__title">{{ cat_title }}</h1>
+                        {% if cat_desc %}
+                            {{ cat_desc }}
+                        {% endif %}
+                        {% if cat_long_desc %}
+                            <a href="#description">Lire la suite</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if products %}
+                    {{ function('woocommerce_product_loop_start') }}
+
+                    {% for product in products %}
+                        {{ function('wc_get_template_part', 'content', 'product') }}
+                    {% endfor %}
+
+                    {{ function('woocommerce_product_loop_end') }}
+                {% else %}
+                    {% do action('woocommerce_no_products_found') %}
+                {% endif %}
+
+                {% do action('woocommerce_after_shop_loop') %}
+
+                {% do action('woocommerce_after_main_content') %}
+            </div>
+        </div>
+    </section>
+{% endblock  %}

@@ -1,0 +1,34 @@
+{% extends "base.twig" %}
+
+{% set main_class = 'single-product' %}
+
+{% block content %}
+    <article itemscope itemtype="https://schema.org/Product" class="single-product-details py-5 {{ post.class }}">
+        <section class="mb-2">
+            <div class="row row--lg">
+                <div class="col">
+                    {% do action('woocommerce_before_single_product') %}
+                </div>
+            </div>
+            <div class="row row--lg">
+                <figure class="col order-2 order-md-1">
+                    {# {% do action('woocommerce_before_single_product_summary') %}#}
+                    <img src="{{ post.thumbnail.src('shop_single') }}" alt="" />
+                </figure>
+                <div class="col prose order-1 order-md-2">
+                    {% do action('woocommerce_single_product_summary') %}
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="row row--lg">
+                <div class="col prose">
+                    {% do action('woocommerce_after_single_product_summary') %}
+                    {% do action('woocommerce_after_single_product') %}
+                </div>
+            </div>
+        </section>
+        <meta itemprop="url" content="{{ post.link }}" />
+    </article>
+{% endblock  %}
