@@ -129,6 +129,10 @@ $header: (
       }
     }
 
+    &__cart {
+      display: flex;
+    }
+
     &__toggle {
       color: map.get(c.$semantic, 'white');
       cursor: pointer;

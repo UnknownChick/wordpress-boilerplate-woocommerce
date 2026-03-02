@@ -55,6 +55,21 @@
 
 		<div class="header__overlay" aria-hidden="true"></div>
 
+		<a
+			class="header__cart"
+			href="{{ wc_cart_url() }}"
+			aria-label="Panier"
+		>
+			<i data-lucide="shopping-cart" aria-hidden="true"></i>
+
+			{% set cart_count = wc_cart_count() %}
+			{% if cart_count > 0 %}
+				<span class="header__cart__count" aria-label="{{ cart_count }} article{{ cart_count > 1 ? 's' }}">
+					{{ cart_count }}
+				</span>
+			{% endif %}
+		</a>
+
 		<button
 			class="header__toggle"
 			aria-label="Ouvrir le menu"

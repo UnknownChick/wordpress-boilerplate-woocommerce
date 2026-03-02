@@ -1,4 +1,4 @@
-import { createIcons, Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Menu } from 'lucide';
+import { createIcons, Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Menu, ShoppingCart } from 'lucide';
 
 createIcons({
     icons: {
@@ -8,6 +8,7 @@ createIcons({
         Mail,
         MapPin,
         Phone,
-        Menu
+        Menu,
+		ShoppingCart,
     }
 });
