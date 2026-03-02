@@ -1,62 +1,181 @@
-<p align="center">
-  <a href="https://roots.io/bedrock/">
-    <img alt="Bedrock" src="https://cdn.roots.io/app/uploads/logo-bedrock.svg" height="100">
-  </a>
-</p>
+# WordPress Boilerplate — WooCommerce
 
-<p align="center">
-  <a href="https://packagist.org/packages/roots/bedrock">
-    <img alt="Packagist Installs" src="https://img.shields.io/packagist/dt/roots/bedrock?label=projects%20created&colorB=2b3072&colorA=525ddc&style=flat-square">
-  </a>
+Boilerplate WordPress avec architecture [Bedrock](https://roots.io/bedrock/), gestion des dépendances via Composer, templating Timber/Twig et stack front-end moderne (Vite + SCSS).
 
-  <a href="https://packagist.org/packages/roots/wordpress">
-    <img alt="roots/wordpress Packagist Downloads" src="https://img.shields.io/packagist/dt/roots/wordpress?label=roots%2Fwordpress%20downloads&logo=roots&logoColor=white&colorB=2b3072&colorA=525ddc&style=flat-square">
-  </a>
-  
-  <img src="https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/roots/bedrock/master/composer.json&label=wordpress&logo=roots&logoColor=white&query=$.require[%22roots/wordpress%22]&colorB=2b3072&colorA=525ddc&style=flat-square">
+---
 
-  <a href="https://github.com/roots/bedrock/actions/workflows/ci.yml">
-    <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/roots/bedrock/ci.yml?branch=master&logo=github&label=CI&style=flat-square">
-  </a>
+## Stack technique
 
-  <a href="https://twitter.com/rootswp">
-    <img alt="Follow Roots" src="https://img.shields.io/badge/follow%20@rootswp-1da1f2?logo=twitter&logoColor=ffffff&message=&style=flat-square">
-  </a>
-</p>
+| Couche | Technologie |
+|---|---|
+| CMS | WordPress (via [roots/wordpress](https://github.com/roots/wordpress)) |
+| Architecture | [Bedrock](https://roots.io/bedrock/) |
+| Dépendances PHP | [Composer](https://getcomposer.org/) |
+| Templating | [Timber](https://timber.github.io/docs/) / [Twig](https://twig.symfony.com/) |
+| Build front-end | [Vite](https://vitejs.dev/) |
+| CSS | SCSS → [LightningCSS](https://lightningcss.dev/) + Autoprefixer + PurgeCSS |
+| JS | ES Modules natifs |
+| CLI WordPress | [WP-CLI](https://wp-cli.org/) |
 
-<p align="center">WordPress boilerplate with Composer, easier configuration, and an improved folder structure</p>
+---
 
-<p align="center">
-  <a href="https://roots.io/bedrock/">Website</a> &nbsp;&nbsp; <a href="https://roots.io/bedrock/docs/installation/">Documentation</a> &nbsp;&nbsp; <a href="https://github.com/roots/bedrock/releases">Releases</a> &nbsp;&nbsp; <a href="https://discourse.roots.io/">Community</a>
-</p>
+## Prérequis
 
-## Sponsors
+- PHP >= 8.0
+- [Composer](https://getcomposer.org/)
+- Node.js >= 18 + npm
+- [WP-CLI](https://wp-cli.org/#installing)
 
-Bedrock is an open source project and completely free to use. If you've benefited from our projects and would like to support our future endeavors, please consider [sponsoring Roots](https://github.com/sponsors/roots).
+---
 
-<div align="center">
-<a href="https://k-m.com/"><img src="https://cdn.roots.io/app/uploads/km-digital.svg" alt="KM Digital" width="120" height="90"></a> <a href="https://carrot.com/"><img src="https://cdn.roots.io/app/uploads/carrot.svg" alt="Carrot" width="120" height="90"></a> <a href="https://wordpress.com/"><img src="https://cdn.roots.io/app/uploads/wordpress.svg" alt="WordPress.com" width="120" height="90"></a> <a href="https://worksitesafety.ca/careers/"><img src="https://cdn.roots.io/app/uploads/worksite-safety.svg" alt="Worksite Safety" width="120" height="90"></a> <a href="https://www.copiadigital.com/"><img src="https://cdn.roots.io/app/uploads/copia-digital.svg" alt="Copia Digital" width="120" height="90"></a> <a href="https://www.freave.com/"><img src="https://cdn.roots.io/app/uploads/freave.svg" alt="Freave" width="120" height="90"></a>
-</div>
+## Installation
 
-## Overview
+### 1. Cloner le dépôt et installer les dépendances PHP
 
-Bedrock is a WordPress boilerplate for developers that want to manage their projects with Git and Composer. Much of the philosophy behind Bedrock is inspired by the [Twelve-Factor App](http://12factor.net/) methodology, including the [WordPress specific version](https://roots.io/twelve-factor-wordpress/).
+```bash
+git clone <repo-url> && cd wordpress-boilerplate-woocommerce
+composer install
+```
 
-- Better folder structure
-- Dependency management with [Composer](https://getcomposer.org)
-- Easy WordPress configuration with environment specific files
-- Environment variables with [Dotenv](https://github.com/vlucas/phpdotenv)
-- Autoloader for mu-plugins (use regular plugins as mu-plugins)
-- Enhanced security (separated web root and secure passwords with [wp-password-bcrypt](https://github.com/roots/wp-password-bcrypt))
+### 2. Configurer l'environnement
 
-## Getting Started
+```bash
+cp .env.example .env
+```
 
-See the [Bedrock installation documentation](https://roots.io/bedrock/docs/installation/).
+Renseigner les variables dans `.env` :
 
-## Stay Connected
+```dotenv
+DB_NAME=your_db
+DB_USER=your_user
+DB_PASSWORD=your_password
+DB_HOST=localhost
 
-- Join us on Discord by [sponsoring us on GitHub](https://github.com/sponsors/roots)
-- Participate on [Roots Discourse](https://discourse.roots.io/)
-- Follow [@rootswp on Twitter](https://twitter.com/rootswp)
-- Read the [Roots Blog](https://roots.io/blog/)
-- Subscribe to the [Roots Newsletter](https://roots.io/newsletter/)
+WP_ENV=development
+WP_HOME=http://localhost:8080
+WP_SITEURL=${WP_HOME}/wp
+```
+
+### 3. Installer les dépendances front-end
+
+```bash
+cd web/app/themes/default
+npm install
+```
+
+---
+
+## Lancer le projet
+
+### Serveur PHP intégré
+
+Depuis la racine du projet :
+
+```bash
+php -S localhost:8000 -t web
+```
+
+Ou via WP-CLI (utilise la config `wp-cli.yml`) :
+
+```bash
+wp server
+```
+
+> WordPress est accessible sur **http://localhost:8080**
+> L'admin est sur **http://localhost:8080/wp/wp-admin**
+
+### Serveur de développement Vite
+
+Dans `web/app/themes/default/` :
+
+```bash
+npm run dev
+```
+
+> Vite démarre sur **http://localhost:1337** avec hot-reload sur les fichiers `.php` et `.twig`.
+
+### Build de production
+
+```bash
+npm run build
+```
+
+Les assets compilés sont générés dans `web/app/themes/default/dist/`.
+
+---
+
+## Plugins inclus
+
+| Plugin | Description |
+|---|---|
+| [WooCommerce](https://woocommerce.com/) | E-commerce |
+| [WooCommerce Gateway Stripe](https://woocommerce.com/document/stripe/) | Paiement Stripe |
+| [Secure Custom Fields (SCF/ACF)](https://wordpress.org/plugins/secure-custom-fields/) | Champs personnalisés |
+| [Extended CPTs](https://github.com/johnbillion/extended-cpts) | Custom post types simplifiés |
+| [Extended ACF](https://github.com/vinkla/extended-acf) | API orientée objet pour ACF |
+| [Query Monitor](https://querymonitor.com/) | Débogage (dev) |
+| [Bedrock Autoloader](https://github.com/roots/bedrock-autoloader) | Autoload mu-plugins |
+| [Bedrock Disallow Indexing](https://github.com/roots/bedrock-disallow-indexing) | Bloque l'indexation hors production |
+
+### Librairies PHP complémentaires
+
+| Package | Description |
+|---|---|
+| [Timber](https://timber.github.io/docs/) | Templating Twig pour WordPress |
+| [Extended Template Parts](https://github.com/johnbillion/extended-template-parts) | Template parts avancés |
+| [johnbillion/args](https://github.com/johnbillion/args) | Arguments typés pour WP |
+| [vinkla/headache](https://github.com/vinkla/headache) | Nettoyage du front WordPress |
+
+---
+
+## Structure du projet
+
+```
+├── composer.json
+├── config/
+│   ├── application.php         # Config WordPress principale
+│   └── environments/           # Surcharges dev / staging / production
+├── web/
+│   ├── app/
+│   │   ├── mu-plugins/         # Must-use plugins
+│   │   ├── plugins/            # Plugins Composer
+│   │   ├── themes/
+│   │   │   └── default/        # Thème principal
+│   │   │       ├── assets/
+│   │   │       │   ├── js/
+│   │   │       │   └── scss/
+│   │   │       ├── views/      # Templates Twig
+│   │   │       ├── src/        # Classes PHP du thème (PSR-4 Theme\)
+│   │   │       ├── vite.config.js
+│   │   │       └── package.json
+│   │   └── uploads/
+│   ├── wp/                     # Core WordPress (géré par Composer)
+│   └── index.php
+└── wp-cli.yml
+```
+
+---
+
+## WP-CLI
+
+Le fichier `wp-cli.yml` pointe automatiquement vers `web/wp`. Toutes les commandes WP-CLI peuvent donc être lancées depuis la racine :
+
+```bash
+wp plugin list
+wp user create admin admin@example.com --role=administrator
+wp search-replace 'http://old-url.com' 'http://localhost:8000'
+```
+
+---
+
+## Documentation
+
+- [Bedrock](https://roots.io/bedrock/docs/)
+- [Timber / Twig](https://timber.github.io/docs/)
+- [Twig](https://twig.symfony.com/doc/)
+- [Vite](https://vitejs.dev/guide/)
+- [Extended CPTs](https://github.com/johnbillion/extended-cpts)
+- [Extended ACF](https://github.com/vinkla/extended-acf)
+- [WooCommerce Developer Docs](https://developer.woocommerce.com/)
+- [WP-CLI Commands](https://developer.wordpress.org/cli/commands/)
+- [LightningCSS](https://lightningcss.dev/)
