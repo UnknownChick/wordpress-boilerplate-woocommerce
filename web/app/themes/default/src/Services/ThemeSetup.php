@@ -28,7 +28,6 @@ class ThemeSetup implements Registerable
 			'gallery',
 			'caption',
 		]);
-		add_theme_support('woocommerce');
 
 		remove_theme_support('core-block-patterns');
 	}
