@@ -6,9 +6,8 @@
     <section class="py-5">
         <div class="row row--lg">
             <div class="col">
-                {% apply shortcodes %}
-                    [woocommerce_my_account]
-                {% endapply %}
+                {{ wc_notices() }}
+                {{ wc_account() }}
             </div>
         </div>
     </section>

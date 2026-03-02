@@ -6,19 +6,8 @@
     <section class="py-5">
         <div class="row row--lg">
             <div class="col">
-                {% apply shortcodes %}
-                    [woocommerce_cart]
-                {% endapply %}
-            </div>
-        </div>
-    </section>
-
-    <section class="pb-5">
-        <div class="row row--lg">
-            <div class="col">
-                <h2 class="mb-2">Voir aussi</h2>
-
-                {{ products }}
+                {{ wc_notices() }}
+                {{ wc_cart() }}
             </div>
         </div>
     </section>

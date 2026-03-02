@@ -1,0 +1,57 @@
+{#
+  Product card partial.
+
+  Expected variables:
+    - product  : Theme\Models\Product (Timber post) or any Timber post with WC data
+#}
+<article class="product-card {{ product.onSale() ? 'product-card--sale' }} {{ not product.inStock() ? 'product-card--out-of-stock' }}">
+
+    <a class="product-card__link" href="{{ product.link }}" title="{{ product.title }}">
+
+        <figure class="product-card__image">
+            {% if product.thumbnail %}
+                <img
+                    src="{{ product.thumbnail.src('woocommerce_thumbnail') }}"
+                    alt="{{ product.title }}"
+                    loading="lazy"
+                    width="450"
+                    height="450"
+                />
+            {% else %}
+                {{ function('woocommerce_get_product_thumbnail') }}
+            {% endif %}
+
+            {% if product.onSale() %}
+                <span class="product-card__badge product-card__badge--sale">
+                    {{ 'Sale' }}
+                </span>
+            {% endif %}
+
+            {% if not product.inStock() %}
+                <span class="product-card__badge product-card__badge--oos">
+                    {{ function('__', 'Out of stock', 'woocommerce') }}
+                </span>
+            {% endif %}
+        </figure>
+
+        <div class="product-card__body">
+            <h3 class="product-card__title">{{ product.title }}</h3>
+
+            {% if product.averageRating() > 0 %}
+                <div class="product-card__rating" aria-label="{{ product.averageRating() }}/5">
+                    {% do action('woocommerce_product_rating') %}
+                </div>
+            {% endif %}
+
+            <div class="product-card__price">
+                {{ product.priceHtml()|raw }}
+            </div>
+        </div>
+
+    </a>
+
+    <div class="product-card__actions">
+        {% do action('woocommerce_after_shop_loop_item') %}
+    </div>
+
+</article>

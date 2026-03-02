@@ -3,32 +3,81 @@
 {% set main_class = 'single-product' %}
 
 {% block content %}
-    <article itemscope itemtype="https://schema.org/Product" class="single-product-details py-5 {{ post.class }}">
-        <section class="mb-2">
-            <div class="row row--lg">
-                <div class="col">
-                    {% do action('woocommerce_before_single_product') %}
-                </div>
-            </div>
-            <div class="row row--lg">
-                <figure class="col order-2 order-md-1">
-                    {# {% do action('woocommerce_before_single_product_summary') %}#}
-                    <img src="{{ post.thumbnail.src('shop_single') }}" alt="" />
-                </figure>
-                <div class="col prose order-1 order-md-2">
-                    {% do action('woocommerce_single_product_summary') %}
-                </div>
-            </div>
-        </section>
+<article itemscope itemtype="https://schema.org/Product" class="product py-5">
 
-        <section>
-            <div class="row row--lg">
-                <div class="col prose">
-                    {% do action('woocommerce_after_single_product_summary') %}
-                    {% do action('woocommerce_after_single_product') %}
+    {# ── Notices ──────────────────────────────────────────────── #}
+    <div class="row row--lg">
+        <div class="col">
+            {{ wc_notices() }}
+            {% do action('woocommerce_before_single_product') %}
+        </div>
+    </div>
+
+    {# ── Main product section ─────────────────────────────────── #}
+    <div class="row row--lg product__main">
+
+        {# Gallery #}
+        <div class="product__gallery col">
+            {% if post.thumbnail %}
+                <figure class="product__image product__image--main">
+                    <img
+                        src="{{ post.thumbnail.src('woocommerce_single') }}"
+                        alt="{{ post.title }}"
+                        width="800"
+                        height="800"
+                        itemprop="image"
+                    />
+                </figure>
+            {% endif %}
+
+            {# Extra gallery images #}
+            {% set gallery_ids = post.galleryIds is defined ? post.galleryIds() : [] %}
+            {% if gallery_ids|length %}
+                <div class="product__gallery-thumbs">
+                    {% for image_id in gallery_ids %}
+                        {% set img = fn('wp_get_attachment_image_src', image_id, 'woocommerce_gallery_thumbnail') %}
+                        {% if img %}
+                            <figure class="product__gallery-thumb">
+                                <img src="{{ img[0] }}" alt="" loading="lazy" />
+                            </figure>
+                        {% endif %}
+                    {% endfor %}
                 </div>
+            {% endif %}
+        </div>
+
+        {# Summary #}
+        <div class="product__summary col prose" itemprop="description">
+            {% do action('woocommerce_single_product_summary') %}
+        </div>
+
+    </div>
+
+    {# ── Tabs (description, reviews, etc.) ────────────────────── #}
+    <div class="row row--lg">
+        <div class="col prose">
+            {% do action('woocommerce_after_single_product_summary') %}
+        </div>
+    </div>
+
+    {# ── Related products ─────────────────────────────────────── #}
+    {% if related_posts %}
+        <section class="product__related row row--lg">
+            <div class="col">
+                <h3>{{ function('__', 'Related products', 'woocommerce') }}</h3>
+                <ul class="products">
+                    {% for product in related_posts %}
+                        <li class="products__item">
+                            {% include 'woo/partials/product-card.twig' with { product: product } %}
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
         </section>
-        <meta itemprop="url" content="{{ post.link }}" />
-    </article>
-{% endblock  %}
+    {% endif %}
+
+    {% do action('woocommerce_after_single_product') %}
+
+    <meta itemprop="url" content="{{ post.link }}" />
+</article>
+{% endblock %}

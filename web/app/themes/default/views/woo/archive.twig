@@ -1,39 +1,71 @@
 {% extends 'base.twig' %}
 
+{% set main_class = 'shop-archive' %}
+
 {% block content %}
-    <section class="py-5">
+
+    {# ── Page header ───────────────────────────────────────────── #}
+    <header class="shop-header py-4">
         <div class="row row--lg">
             <div class="col">
-                {% do action('woocommerce_before_shop_loop') %}
+                {% do action('woocommerce_archive_description') %}
 
-                {% if cat_title %}
-                    <div class="prose mb-3">
-                        <h1 class="cat__title">{{ cat_title }}</h1>
-                        {% if cat_desc %}
-                            {{ cat_desc }}
-                        {% endif %}
-                        {% if cat_long_desc %}
-                            <a href="#description">Lire la suite</a>
-                        {% endif %}
-                    </div>
+                {% if title %}
+                    <h1 class="shop-header__title">{{ title }}</h1>
                 {% endif %}
 
-                {% if products %}
-                    {{ function('woocommerce_product_loop_start') }}
-
-                    {% for product in products %}
-                        {{ function('wc_get_template_part', 'content', 'product') }}
-                    {% endfor %}
-
-                    {{ function('woocommerce_product_loop_end') }}
-                {% else %}
-                    {% do action('woocommerce_no_products_found') %}
+                {% if cat_desc %}
+                    <div class="shop-header__desc prose">{{ cat_desc|raw }}</div>
                 {% endif %}
-
-                {% do action('woocommerce_after_shop_loop') %}
-
-                {% do action('woocommerce_after_main_content') %}
             </div>
         </div>
-    </section>
-{% endblock  %}
+    </header>
+
+    {# ── Notices (stock, coupon, etc.) ────────────────────────── #}
+    <div class="row row--lg">
+        <div class="col">
+            {{ wc_notices() }}
+        </div>
+    </div>
+
+    {# ── Main content grid ─────────────────────────────────────── #}
+    <div class="shop-layout row row--lg py-5">
+
+        {# Sidebar filters #}
+        <div class="shop-layout__sidebar col--sidebar">
+            {% include 'woo/partials/filters.twig' %}
+        </div>
+
+        {# Product grid #}
+        <div class="shop-layout__main col">
+
+            {# Toolbar: result count + ordering #}
+            <div class="shop-toolbar">
+                {% do action('woocommerce_before_shop_loop') %}
+            </div>
+
+            {% if products %}
+
+                <ul class="products">
+                    {% for product in products %}
+                        <li class="products__item">
+                            {% include 'woo/partials/product-card.twig' with { product: product } %}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            {% else %}
+                <div class="shop-empty">
+                    {% do action('woocommerce_no_products_found') %}
+                </div>
+            {% endif %}
+
+            {# Pagination #}
+            <nav class="shop-pagination">
+                {% do action('woocommerce_after_shop_loop') %}
+            </nav>
+
+        </div>
+    </div>
+
+{% endblock %}

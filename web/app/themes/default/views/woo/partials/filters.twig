@@ -1,0 +1,34 @@
+{#
+  Product filters sidebar.
+
+  Uses WooCommerce's native layered nav and orderby hooks.
+  Rendered in archive.twig inside a <aside> wrapper.
+#}
+<aside class="shop-filters">
+
+    <div class="shop-filters__section">
+        <h3 class="shop-filters__heading">{{ function('__', 'Sort by', 'woocommerce') }}</h3>
+        <form class="shop-filters__orderby" method="get">
+            {{ function('woocommerce_catalog_ordering') }}
+            {# Preserve existing query string params #}
+            {% for key, value in app.request.query.all %}
+                {% if key != 'orderby' %}
+                    <input type="hidden" name="{{ key }}" value="{{ value }}">
+                {% endif %}
+            {% endfor %}
+        </form>
+    </div>
+
+    {# Active filters #}
+    <div class="shop-filters__active">
+        {% do action('woocommerce_before_shop_loop') %}
+    </div>
+
+    {# WooCommerce layered nav widgets – rendered via dynamic_sidebar or custom widget areas #}
+    {% if function('is_active_sidebar', 'shop-filters') %}
+        <div class="shop-filters__widgets">
+            {{ function('dynamic_sidebar', 'shop-filters') }}
+        </div>
+    {% endif %}
+
+</aside>
