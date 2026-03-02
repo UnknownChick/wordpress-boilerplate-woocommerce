@@ -24,7 +24,7 @@ $header: (
     transition: all map.get(var.$global, animation-duration) ease-in-out;
     background-color: c.$primary-500;
 
-    .#{$_ln}__container {
+    &__container {
       position: relative;
 
       @include mq.min-device(map.get($header, breakpoint)) {
@@ -41,7 +41,7 @@ $header: (
       }
     }
 
-    .#{$_ln}__logo {
+    &__logo {
       display: block;
       margin-right: 2rem;
       position: relative;
@@ -53,7 +53,7 @@ $header: (
       }
     }
 
-    .#{$_ln}__menu {
+    &__menu {
       margin-left: auto;
       z-index: 10;
 
@@ -129,7 +129,7 @@ $header: (
       }
     }
 
-    .#{$_ln}__toggle {
+    &__toggle {
       color: map.get(c.$semantic, 'white');
       cursor: pointer;
       position: relative;
@@ -161,7 +161,7 @@ $header: (
       }
     }
 
-    .#{$_ln}__overlay {
+    &__overlay {
       display: none;
 
       @include mq.max-device(map.get($header, breakpoint)) {
