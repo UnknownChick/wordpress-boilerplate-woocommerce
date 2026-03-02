@@ -7,7 +7,7 @@ Boilerplate WordPress avec architecture [Bedrock](https://roots.io/bedrock/), ge
 ## Stack technique
 
 | Couche | Technologie |
-|---|---|
+| --- | --- |
 | CMS | WordPress (via [roots/wordpress](https://github.com/roots/wordpress)) |
 | Architecture | [Bedrock](https://roots.io/bedrock/) |
 | Dépendances PHP | [Composer](https://getcomposer.org/) |
@@ -81,8 +81,8 @@ Ou via WP-CLI (utilise la config `wp-cli.yml`) :
 wp server
 ```
 
-> WordPress est accessible sur **http://localhost:8080**
-> L'admin est sur **http://localhost:8080/wp/wp-admin**
+> WordPress est accessible sur **<http://localhost:8080>**
+> L'admin est sur **<http://localhost:8080/wp/wp-admin>**
 
 ### Serveur de développement Vite
 
@@ -92,7 +92,7 @@ Dans `web/app/themes/default/` :
 npm run dev
 ```
 
-> Vite démarre sur **http://localhost:1337** avec hot-reload sur les fichiers `.php` et `.twig`.
+> Vite démarre sur **<http://localhost:1337>** avec hot-reload sur les fichiers `.php` et `.twig`.
 
 ### Build de production
 
@@ -107,7 +107,7 @@ Les assets compilés sont générés dans `web/app/themes/default/dist/`.
 ## Plugins inclus
 
 | Plugin | Description |
-|---|---|
+| --- | --- |
 | [WooCommerce](https://woocommerce.com/) | E-commerce |
 | [WooCommerce Gateway Stripe](https://woocommerce.com/document/stripe/) | Paiement Stripe |
 | [Secure Custom Fields (SCF/ACF)](https://wordpress.org/plugins/secure-custom-fields/) | Champs personnalisés |
@@ -120,7 +120,7 @@ Les assets compilés sont générés dans `web/app/themes/default/dist/`.
 ### Librairies PHP complémentaires
 
 | Package | Description |
-|---|---|
+| --- | --- |
 | [Timber](https://timber.github.io/docs/) | Templating Twig pour WordPress |
 | [Extended Template Parts](https://github.com/johnbillion/extended-template-parts) | Template parts avancés |
 | [johnbillion/args](https://github.com/johnbillion/args) | Arguments typés pour WP |
@@ -130,7 +130,7 @@ Les assets compilés sont générés dans `web/app/themes/default/dist/`.
 
 ## Structure du projet
 
-```
+``` MD
 ├── composer.json
 ├── config/
 │   ├── application.php         # Config WordPress principale
