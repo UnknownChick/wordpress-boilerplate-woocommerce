@@ -22,6 +22,7 @@ class WooHooks implements Registerable
 		add_action('init', [$this, 'removeDefaultWrappers']);
 		add_action('init', [$this, 'removeDefaultBreadcrumb']);
 		add_action('init', [$this, 'customiseShopLoop']);
+		add_filter('template_include', [$this, 'routeWooPages']);
 	}
 
 	/**
@@ -43,6 +44,23 @@ class WooHooks implements Registerable
 	public function removeDefaultBreadcrumb(): void
 	{
 		remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
+	}
+
+	/**
+	 * Force cart, checkout and My Account pages to use woocommerce.php
+	 * instead of page.php, since WordPress treats them as regular pages.
+	 */
+	public function routeWooPages(string $template): string
+	{
+		if (is_cart() || is_checkout() || is_account_page()) {
+			$woo_template = get_stylesheet_directory() . '/woocommerce.php';
+
+			if (file_exists($woo_template)) {
+				return $woo_template;
+			}
+		}
+
+		return $template;
 	}
 
 	/**
